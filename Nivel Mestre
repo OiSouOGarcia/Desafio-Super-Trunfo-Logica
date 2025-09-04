@@ -1,0 +1,125 @@
+#include <stdio.h>
+
+int main() {
+    // Variáveis da Carta 1
+    char estado1[20], codigo1[4], nome1[50];
+    unsigned long int populacao1;
+    float area1, pib1;
+    int pontos1;
+    float densidade1;
+
+    // Variáveis da Carta 2
+    char estado2[20], codigo2[4], nome2[50];
+    unsigned long int populacao2;
+    float area2, pib2;
+    int pontos2;
+    float densidade2;
+
+    int opcao1, opcao2;
+
+    // -----------------------------
+    // Cadastro da Carta 1
+    // -----------------------------
+    printf("=== Cadastro da Carta 1 ===\n");
+    printf("Estado: ");
+    scanf("%s", estado1);
+    printf("Codigo da carta (ex: A01): ");
+    scanf("%s", codigo1);
+    printf("Nome da cidade: ");
+    scanf(" %[^\n]s", nome1);
+    printf("Populacao: ");
+    scanf("%lu", &populacao1);
+    printf("Area: ");
+    scanf("%f", &area1);
+    printf("PIB: ");
+    scanf("%f", &pib1);
+    printf("Numero de pontos turisticos: ");
+    scanf("%d", &pontos1);
+
+    densidade1 = populacao1 / area1;
+
+    // -----------------------------
+    // Cadastro da Carta 2
+    // -----------------------------
+    printf("\n=== Cadastro da Carta 2 ===\n");
+    printf("Estado: ");
+    scanf("%s", estado2);
+    printf("Codigo da carta (ex: B02): ");
+    scanf("%s", codigo2);
+    printf("Nome da cidade: ");
+    scanf(" %[^\n]s", nome2);
+    printf("Populacao: ");
+    scanf("%lu", &populacao2);
+    printf("Area: ");
+    scanf("%f", &area2);
+    printf("PIB: ");
+    scanf("%f", &pib2);
+    printf("Numero de pontos turisticos: ");
+    scanf("%d", &pontos2);
+
+    densidade2 = populacao2 / area2;
+
+    // -----------------------------
+    // Menu Dinâmico - Escolha dos atributos
+    // -----------------------------
+    printf("\n=== Menu de Comparacao ===\n");
+    printf("1 - Populacao\n2 - Area\n3 - PIB\n4 - Pontos Turisticos\n5 - Densidade Populacional\n");
+    printf("Escolha o primeiro atributo para comparar: ");
+    scanf("%d", &opcao1);
+    printf("Escolha o segundo atributo para comparar: ");
+    scanf("%d", &opcao2);
+
+    printf("\n=== Resultado da Comparacao ===\n");
+
+    // -----------------------------
+    // Função inline de comparação com operador ternário
+    // -----------------------------
+    int vencedor1, vencedor2;
+
+    float valor1_op1 = (opcao1 == 1) ? populacao1 :
+                        (opcao1 == 2) ? area1 :
+                        (opcao1 == 3) ? pib1 :
+                        (opcao1 == 4) ? pontos1 : densidade1;
+
+    float valor2_op1 = (opcao1 == 1) ? populacao2 :
+                        (opcao1 == 2) ? area2 :
+                        (opcao1 == 3) ? pib2 :
+                        (opcao1 == 4) ? pontos2 : densidade2;
+
+    float valor1_op2 = (opcao2 == 1) ? populacao1 :
+                        (opcao2 == 2) ? area1 :
+                        (opcao2 == 3) ? pib1 :
+                        (opcao2 == 4) ? pontos1 : densidade1;
+
+    float valor2_op2 = (opcao2 == 1) ? populacao2 :
+                        (opcao2 == 2) ? area2 :
+                        (opcao2 == 3) ? pib2 :
+                        (opcao2 == 4) ? pontos2 : densidade2;
+
+    // Comparação do primeiro atributo
+    vencedor1 = (opcao1 == 5) ? (valor1_op1 < valor2_op1 ? 1 : (valor1_op1 > valor2_op1 ? 2 : 0))
+                              : (valor1_op1 > valor2_op1 ? 1 : (valor1_op1 < valor2_op1 ? 2 : 0));
+
+    // Comparação do segundo atributo
+    vencedor2 = (opcao2 == 5) ? (valor1_op2 < valor2_op2 ? 1 : (valor1_op2 > valor2_op2 ? 2 : 0))
+                              : (valor1_op2 > valor2_op2 ? 1 : (valor1_op2 < valor2_op2 ? 2 : 0));
+
+    // -----------------------------
+    // Resultado final considerando ambos os atributos
+    // -----------------------------
+    if (vencedor1 == vencedor2) {
+        if (vencedor1 == 0)
+            printf("Empate em ambos os atributos!\n");
+        else
+            printf("Carta %d vence ambos os atributos!\n", vencedor1);
+    } else {
+        if (vencedor1 == 0 && vencedor2 != 0)
+            printf("Carta %d vence pelo segundo atributo!\n", vencedor2);
+        else if (vencedor2 == 0 && vencedor1 != 0)
+            printf("Carta %d vence pelo primeiro atributo!\n", vencedor1);
+        else
+            printf("A comparacao e equilibrada: Carta %d e Carta %d venceram cada atributo!\n", vencedor1, vencedor2);
+    }
+
+    return 0;
+}
